@@ -4,7 +4,7 @@ from statsmodels.graphics.tsaplots import plot_acf
 from statsmodels.tsa.stattools import adfuller as ADF
 
 # 参数初始化
-discfile = 'D:/Project/load_forecast_TimeSeries/data/arima_data.xls'
+discfile = 'D:/GitHub/load_forecast_TimeSeries/data/arima_data.xls'
 
 # 读取数据，指定日期列为指标，Pandas自动将“日期”列识别为Datetime格式
 data = pd.read_excel(discfile, index_col=0)
@@ -28,7 +28,7 @@ plt.show()
 '''
 
 # 平稳性检验
-print(u'原始序列的ADF检验结果为:', ADF(data[u'销量']))
+# print(u'原始序列的ADF检验结果为:', ADF(data[u'销量']))
 # 返回值依次为adf、pvalue、usedlag、nobs、critical values、icbest、regresults、resstore
 # 从返回值看检验结果的pvalue即p值显著大于0.05，判断该序列为非平稳序列。
 
@@ -49,4 +49,20 @@ from statsmodels.graphics.tsaplots import plot_pacf
 # plt.show()
 
 # 差分后序列平稳性检验
-print(u'差分序列的ADF检验结果为：',ADF(D_data[u'销量差分']) )
+# print(u'差分序列的ADF检验结果为：',ADF(D_data[u'销量差分']) )
+
+# 平稳性检验通过，还需要进行白噪声检验
+from statsmodels.stats.diagnostic import acorr_ljungbox
+
+# print(u'差分序列的白噪声检验结果为:', acorr_ljungbox(D_data, lags=1))
+# 返回统计量和p值
+
+# 合适的p、q
+import statsmodels.api as sm
+dta = data.diff(1)[1:]
+fig = plt.figure(figsize=[12,8])
+ax1 = fig.add_subplot(211)
+fig1 = sm.graphics.tsa.plot_acf(dta[u'销量'],lags=10,ax=ax1)
+ax2 = fig.add_subplot(212)
+fig2 = sm.graphics.tsa.plot_pacf(dta[u'销量'],lags=10,ax=ax2)
+plt.show()
