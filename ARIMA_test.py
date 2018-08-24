@@ -33,3 +33,20 @@ print(u'原始序列的ADF检验结果为:', ADF(data[u'销量']))
 # 从返回值看检验结果的pvalue即p值显著大于0.05，判断该序列为非平稳序列。
 
 # 时间序列的差分d
+D_data = data.diff().dropna()
+D_data.columns = [u'销量差分']
+# D_data.plot()  # 时序图
+# plt.show()
+
+# 差分后序列自相关检验
+# plot_acf(D_data)
+# plt.show()
+
+# 差分后偏自相关检验
+from statsmodels.graphics.tsaplots import plot_pacf
+
+# plot_pacf(D_data)
+# plt.show()
+
+# 差分后序列平稳性检验
+print(u'差分序列的ADF检验结果为：',ADF(D_data[u'销量差分']) )
