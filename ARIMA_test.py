@@ -57,12 +57,31 @@ from statsmodels.stats.diagnostic import acorr_ljungbox
 # print(u'差分序列的白噪声检验结果为:', acorr_ljungbox(D_data, lags=1))
 # 返回统计量和p值
 
+# 比较一阶差分和二阶差分序列
+# # 一阶差分
+# fig = plt.figure(figsize=(12, 8))
+# ax1 = fig.add_subplot(121)
+# diff1 = data.diff(1)
+# diff1.plot(ax=ax1)
+# # 二阶差分
+# ax2 = fig.add_subplot(122)
+# diff2 = data.diff(2)
+# diff2.plot(ax=ax2)
+# plt.show()
+
 # 合适的p、q
 import statsmodels.api as sm
+
 dta = data.diff(1)[1:]
-fig = plt.figure(figsize=[12,8])
+# print(dta)
+
+fig = plt.figure(figsize=[12, 8])
 ax1 = fig.add_subplot(211)
-fig1 = sm.graphics.tsa.plot_acf(dta[u'销量'],lags=10,ax=ax1)
+fig1 = sm.graphics.tsa.plot_acf(dta[u'销量'], lags=10, ax=ax1)
 ax2 = fig.add_subplot(212)
-fig2 = sm.graphics.tsa.plot_pacf(dta[u'销量'],lags=10,ax=ax2)
+fig2 = sm.graphics.tsa.plot_pacf(dta[u'销量'], lags=10, ax=ax2)
 plt.show()
+
+# 预测
+predict_sunspots =
+
